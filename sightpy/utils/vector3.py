@@ -63,7 +63,8 @@ class vec3():
         elif isinstance(v, numbers.Number) or isinstance(v, np.ndarray):
             return vec3(v / self.x, v / self.y, v / self.z)
     
-
+    def __neg__(self):
+        return vec3(-self.x, -self.y, -self.z)
     
     def __abs__(self):
         return vec3(np.abs(self.x), np.abs(self.y), np.abs(self.z))
@@ -159,6 +160,13 @@ class vec3():
         np.place(r.y, cond, self.y)
         np.place(r.z, cond, self.z)
         return r
+    
+    def place_values(self, cond, val):
+        r = vec3(self.x.copy(), self.y.copy(), self.z.copy())
+        np.place(r.x, cond, val.x)
+        np.place(r.y, cond, val.y)
+        np.place(r.z, cond, val.z)
+        return r
 
     def repeat(self, n):
         return vec3(np.repeat(self.x , n), np.repeat(self.y , n),   np.repeat(self.z , n))
@@ -178,6 +186,8 @@ class vec3():
     def __eq__(self, other):
         return (self.x == other.x)  &  (self.y == other.y) & (self.z == other.z)
 
+    def zeros_like(self):
+        return vec3(np.zeros_like(self.x), np.zeros_like(self.y), np.zeros_like(self.z))
     
 def array_to_vec3(array):
     return vec3(array[0],array[1],array[2])
